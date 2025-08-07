@@ -1,0 +1,89 @@
+@use './mixin' as mixin;
+
+$color: #ff9c00;
+
+body {
+  height: 100vh;
+  background-image: url(../images/bg.jpg);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  background-attachment: fixed;
+}
+
+.container {
+  padding: 50px 0;
+
+  .heroes {
+    @include mixin.center();
+    flex-wrap: wrap;
+    max-width: 660px;
+    margin: 0 auto;
+    padding: 40px 20px;
+
+    .hero {
+      position: relative;
+      width: 80px; 
+      height: 84px; 
+      margin: 4px; 
+      overflow: hidden;
+      background-color: #555;
+      border: 3px solid #fff;
+      border-radius: 10px;
+      box-sizing: border-box;
+      transform: skew(-14deg);
+      transition: transform .1s, background-color .6s;
+
+      &:hover {
+        background-color: $color; 
+        transform: skewX(-14deg) scale(1.3);
+        z-index: 1;
+
+        &::after {
+          bottom: 0;
+        }
+      }
+
+      &::after {
+        content: attr(data-hero-name);
+        position: absolute;
+        left: 0;
+        bottom: -100%;
+        width: 100%;
+        background-color: $color;
+        font-size: 13px;
+        text-align: center;
+        transition: .5s;
+      }
+
+      .image {
+        width: 140%; 
+        height: 100%;
+        background: {
+          position: center;
+          repeat: no-repeat;
+          size: 90px;
+        }
+        transform: translateX(-6px) skewX(14deg);
+      }
+
+      @for $i from 1 through 32 {
+        &:nth-child(#{$i}) {
+          .image {
+            background-image: url(../images/hero#{$i}.png);
+          }
+        }
+      }
+    }
+  }
+
+  .logo {
+    max-width: 300px;
+    margin: 0 auto;
+    padding: 0 20px;
+  
+    img {
+      width: 100%;
+    }
+  }
+}
